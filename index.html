@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Everything You Own Is Trying to Confuse You \u2014 The Design of Everyday Things</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brass:       #C8922A;
+    --brass-light: #E6B44A;
+    --brass-dark:  #9A6F18;
+    --ink:         #1A1611;
+    --ink-soft:    #2E2820;
+    --parchment:   #FAF7F2;
+    --paper:       #F4F0E8;
+    --rule:        #D8CDB8;
+    --muted:       #7A6E5F;
+    --white:       #FFFFFF;
+
+    --concept-bg:  #FFF8E8;
+    --concept-bd:  #C8922A;
+    --example-bg:  #EFF6F2;
+    --example-bd:  #3A7A5A;
+    --warning-bg:  #FDF2F0;
+    --warning-bd:  #B84A3A;
+    --principle-bg:#F0F0FA;
+    --principle-bd:#5A5A9A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* \u2500\u2500 MASTHEAD \u2500\u2500 */
+  .masthead {
+    background: var(--ink);
+    color: var(--brass-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 2.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--brass-dark);
+  }
+  .masthead-category { opacity: 0.85; }
+  .masthead-title { opacity: 0.5; font-style: italic; }
+
+  /* \u2500\u2500 HERO \u2500\u2500 */
+  .hero {
+    background: var(--ink-soft);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 2.5rem 4.5rem;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 40%, rgba(200,146,42,0.12) 0%, transparent 70%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        rgba(200,146,42,0.04) 39px,
+        rgba(200,146,42,0.04) 40px
+      );
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brass-dark), var(--brass-light), var(--brass-dark));
+  }
+  .hero-inner { max-width: 820px; margin: 0 auto; position: relative; }
+
+  .hero-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass-light);
+    margin-bottom: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-kicker::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--brass);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garant', Georgia, serif;
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 1.4rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--brass-light);
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.65;
+    max-width: 620px;
+    margin-bottom: 2.8rem;
+    font-style: italic;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.4rem;
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 0.45rem; }
+  .hero-meta .label { color: var(--brass); }
+
+  /* \u2500\u2500 TABLE OF CONTENTS \u2500\u2500 */
+  .toc-section {
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.8rem 2.5rem;
+  }
+  .toc-header {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass-dark);
+    margin-bottom: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .toc-header::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 2.5rem;
+  }
+  @media (max-width: 600px) { .toc-grid { grid-template-columns: 1fr; } }
+
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 0.45rem 0;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+    font-size: 0.95rem;
+  }
+  .toc-item:hover { color: var(--brass-dark); border-bottom-color: var(--brass); }
+  .toc-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--brass);
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    padding-top: 0.1em;
+  }
+
+  /* \u2500\u2500 ARTICLE BODY \u2500\u2500 */
+  .article-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+
+  /* \u2500\u2500 SECTION \u2500\u2500 */
+  .section {
+    padding: 4.5rem 0 0;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 0;
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--brass);
+    padding: 0.25em 0.65em;
+    border-radius: 2px;
+  }
+  .section-cat {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .section h2 {
+    font-family: 'Cormorant Garant', Georgia, serif;
+    font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  .section p {
+    margin-bottom: 1.35rem;
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  .section p:last-child { margin-bottom: 2.8rem; }
+
+  strong { color: var(--ink-soft); font-weight: 600; }
+
+  /* \u2500\u2500 PULL QUOTE \u2500\u2500 */
+  .pull-quote {
+    border-left: 4px solid var(--brass);
+    padding: 1.6rem 2rem;
+    margin: 2.2rem 0;
+    background: rgba(200,146,42,0.04);
+    font-family: 'Cormorant Garant', Georgia, serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    line-height: 1.45;
+    font-weight: 500;
+    color: var(--ink-soft);
+    position: relative;
+  }
+  .pull-quote::before {
+    content: '\201C';
+    font-size: 4.5rem;
+    line-height: 0;
+    color: var(--brass-light);
+    opacity: 0.4;
+    position: absolute;
+    top: 1.5rem;
+    left: 0.6rem;
+    font-family: 'Cormorant Garant', Georgia, serif;
+  }
+  .pull-quote-attr {
+    display: block;
+    margin-top: 0.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  /* \u2500\u2500 CALLOUT BOXES \u2500\u2500 */
+  .callout {
+    border-radius: 4px;
+    padding: 1.4rem 1.6rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .callout-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.7rem;
+    display: block;
+  }
+  .callout p { margin-bottom: 0.6rem; font-size: 0.95rem; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  .callout.concept {
+    background: var(--concept-bg);
+    border-left: 4px solid var(--concept-bd);
+  }
+  .callout.concept .callout-label { color: var(--brass-dark); }
+
+  .callout.example {
+    background: var(--example-bg);
+    border-left: 4px solid var(--example-bd);
+  }
+  .callout.example .callout-label { color: #2A5C40; }
+
+  .callout.warning {
+    background: var(--warning-bg);
+    border-left: 4px solid var(--warning-bd);
+  }
+  .callout.warning .callout-label { color: #8A2A1A; }
+
+  .callout.principle {
+    background: var(--principle-bg);
+    border-left: 4px solid var(--principle-bd);
+  }
+  .callout.principle .callout-label { color: #3A3A7A; }
+
+  /* \u2500\u2500 DIAGRAM \u2500\u2500 */
+  .diagram {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 2rem;
+    margin: 2.2rem 0;
+  }
+  .diagram-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.6rem;
+    text-align: center;
+  }
+
+  .seven-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .stage-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .stage-block {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    font-size: 0.82rem;
+    line-height: 1.3;
+    font-weight: 500;
+    position: relative;
+  }
+  .stage-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+  }
+  .stage-name { font-family: 'Source Serif 4', serif; font-weight: 600; }
+  .stage-desc { font-size: 0.75rem; opacity: 0.8; margin-top: 0.2rem; }
+
+  .gulf-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.03);
+    border-left: 1px solid var(--rule);
+    min-width: 28px;
+    gap: 0;
+  }
+
+  .s-goal   { background: #2A2A3A; color: #fff; border-radius: 4px 4px 0 0; }
+  .s-plan   { background: #3A4A6A; color: #fff; }
+  .s-specify{ background: #2A5A7A; color: #fff; }
+  .s-perform{ background: #1A6A5A; color: #fff; }
+  .s-perceive{background: #2A6A2A; color: #fff; }
+  .s-interpret{background: #5A5A2A; color: #fff; }
+  .s-compare{ background: #7A3A2A; color: #fff; border-radius: 0 0 4px 4px; }
+
+  .gulf-exec { background: rgba(200,146,42,0.08); border-left: 3px solid var(--brass); }
+  .gulf-eval { background: rgba(58,122,90,0.08); border-left: 3px solid #3A7A5A; }
+
+  /* \u2500\u2500 ACTION CYCLE DIAGRAM \u2500\u2500 */
+  .action-cycle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .cycle-node {
+    text-align: center;
+    padding: 1rem 1.2rem;
+    border-radius: 6px;
+    min-width: 110px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  /* \u2500\u2500 PRINCIPLE GRID \u2500\u2500 */
+  .principle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  @media (max-width: 550px) { .principle-grid { grid-template-columns: 1fr; } }
+
+  .pg-card {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.2rem 1.3rem;
+    background: var(--white);
+    transition: border-color 0.2s;
+  }
+  .pg-card:hover { border-color: var(--brass); }
+  .pg-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass-dark);
+    margin-bottom: 0.4rem;
+  }
+  .pg-card h4 {
+    font-family: 'Cormorant Garant', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+  .pg-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.55; margin: 0; }
+
+  /* \u2500\u2500 MAPPING DIAGRAM \u2500\u2500 */
+  .mapping-diagram {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    align-items: start;
+    margin: 1rem 0;
+  }
+  .map-col { display: flex; flex-direction: column; gap: 0.6rem; }
+  .map-item {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  .map-arrow-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0.15rem;
+  }
+  .map-arrow {
+    font-size: 1.2rem;
+    color: var(--brass);
+    line-height: 2.55;
+  }
+  .map-header {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+    text-align: center;
+  }
+  .good-map .map-item { border-color: #3A7A5A; }
+  .bad-map .map-item { border-color: #B84A3A; }
+
+  /* \u2500\u2500 FOOTER \u2500\u2500 */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.45);
+    padding: 2.8rem 2.5rem;
+    margin-top: 5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+  }
+  .footer-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  .footer-source { line-height: 1.7; }
+  .footer-source strong { color: var(--brass); display: block; margin-bottom: 0.3rem; font-size: 0.7rem; }
+  .footer-note { text-align: right; max-width: 360px; line-height: 1.7; }
+
+  /* \u2500\u2500 DECORATIVE RULE \u2500\u2500 */
+  .section-rule {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 2.5rem 0 0;
+    padding-bottom: 0;
+  }
+  .section-rule::before, .section-rule::after {
+    content: ''; flex: 1; height: 1px; background: var(--rule);
+  }
+  .section-rule-diamond {
+    width: 6px; height: 6px;
+    background: var(--brass);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--paper); }
+  ::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--brass); }
+
+  /* responsive */
+  @media (max-width: 700px) {
+    body { font-size: 16px; }
+    .masthead { padding: 0.5rem 1.2rem; }
+    .hero { padding: 3rem 1.2rem 3rem; }
+    .toc-inner, .article-body { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .mapping-diagram { grid-template-columns: 1fr; }
+    .map-arrow-col { flex-direction: row; }
+    .map-arrow { line-height: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 MASTHEAD \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 -->
+<header class="masthead">
+  <span class="masthead-category">Book Explainer &nbsp;\u00b7&nbsp; Design</span>
+  <span class="masthead-title">The Design of Everyday Things \u2014 Don Norman, 1988</span>
+</header>
+
+<!-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 HERO \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-kicker">Book Deep-Dive</p>
+    <h1>Why Everything You Own<br>Is <em>Trying to Confuse You</em></h1>
+    <p class="hero-subtitle">
+      Don Norman's landmark manifesto reveals that bad design isn't your fault \u2014 it's a moral failure 
+      by the designers who built the objects in your life. Here's everything he discovered, and why it 
+      changed how we think about every knob, door, and button on Earth.
+    </p>
+    <div class="hero-meta">
+      <span><span class="label">Source</span> The Design of Everyday Things</span>
+      <span><span class="label">Author</span> Don Norman</span>
+      <span><span class="label">Year</span> 1988 (revised 2013)</span>
+      <span><span class="label">Field</span> Cognitive Science / Design</span>
+      <span><span class="label">Read Time</span> ~22 minutes</span>
+    </div>
+  </div>
+</section>
+
+<!-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 TABLE OF CONTENTS \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 -->
+<nav class="toc-section">
+  <div class="toc-inner">
+    <div class="toc-header">Contents</div>
+    <div class="toc-grid">
+      <a href="#s1" class="toc-item"><span class="toc-num">01</span> It's Not You \u2014 It's the Design</a>
+      <a href="#s2" class="toc-item"><span class="toc-num">02</span> Affordances: What Objects Invite</a>
+      <a href="#s3" class="toc-item"><span class="toc-num">03</span> Signifiers: How Design Speaks</a>
+      <a href="#s4" class="toc-item"><span class="toc-num">04</span> Feedback and Conceptual Models</a>
+      <a href="#s5" class="toc-item"><span class="toc-num">05</span> Mapping: Controls and Their Consequences</a>
+      <a href="#s6" class="toc-item"><span class="toc-num">06</span> Constraints: Designed Guardrails</a>
+      <a href="#s7" class="toc-item"><span class="toc-num">07</span> The Seven Stages of Action</a>
+      <a href="#s8" class="toc-item"><span class="toc-num">08</span> Human Error Is a Design Problem</a>
+      <a href="#s9" class="toc-item"><span class="toc-num">09</span> The Paradox of Technology</a>
+      <a href="#s10" class="toc-item"><span class="toc-num">10</span> Human-Centered Design</a>
+      <a href="#s11" class="toc-item"><span class="toc-num">11</span> Why This Book Changed Everything</a>
+    </div>
+  </div>
+</nav>
+
+<!-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 BODY \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 -->
+<main class="article-body">
+
+  <!-- \u2500\u2500 SECTION 1 \u2500\u2500 -->
+  <article class="section" id="s1">
+    <div class="section-label">
+      <span class="section-num">01</span>
+      <span class="section-cat">The Core Argument</span>
+    </div>
+    <h2>You Are Not Stupid. The Door Is.</h2>
+
+    <p>You've done it. Everyone has. You walked up to a door, grabbed the handle, and pulled \u2014 and nothing happened. You pull harder. Still nothing. Then, with a creeping sense of humiliation, you notice the tiny word engraved somewhere on the hardware: <em>push</em>. You laugh nervously. You glance around. You want the floor to swallow you.</p>
+
+    <p>Don Norman looked at this exact scenario and saw not an embarrassed person, but an indicted designer. His conclusion, delivered in 1988 with elegant ferocity in <em>The Design of Everyday Things</em>, was this: <strong>if you have to read the instructions, the design has already failed.</strong> If you pull when you should push, that's not a character flaw. The door told you to pull. It told you with its shape, its handle, its visual weight. The door lied to you. And the person who designed that door \u2014 not you \u2014 is responsible.</p>
+
+    <p>This was a genuinely radical idea at the time. The prevailing assumption in engineering and manufacturing was that objects are correct and users are variable. If a user operates a product incorrectly, they need training. Norman flipped this entirely: <strong>objects are artifacts of decisions made by human designers</strong>, and if those decisions systematically confuse people, the designers have failed at the most fundamental level of their profession.</p>
+
+    <div class="pull-quote">
+      "Whenever you see signs or labels added to a device, it is an indication of a failure of design."
+      <span class="pull-quote-attr">\u2014 Don Norman, The Design of Everyday Things</span>
+    </div>
+
+    <p>The book's scope is disarmingly broad. Norman examines doors, faucets, stoves, refrigerators, telephones, nuclear power plants, and aircraft cockpits. He builds a unified theory of why they work or don't \u2014 not in engineering terms, but in <em>cognitive</em> terms. The question he keeps asking is: what does this object communicate to the human brain that has to use it? And what happens when that communication breaks down?</p>
+
+    <p>Norman came to design from an unexpected direction. He was \u2014 and still is \u2014 a cognitive scientist. He spent his career studying how human minds process information, form mental models, make decisions, and make errors. When he turned that lens on the designed world, what he saw disturbed him. The objects surrounding everyday life were designed by people who understood materials, engineering, and aesthetics, but had little understanding of how human cognition actually works. The result: a world full of elegant-looking objects that are, cognitively speaking, cruel.</p>
+
+    <div class="callout concept">
+      <span class="callout-label">\ud83d\udd11 Central Claim</span>
+      <p>The us
